@@ -52,9 +52,10 @@ public class AdminViewService {
 
         // 5. 선택된 10개의 경기장 정보를 담은 Stadium 객체 리스트와 접속수를 담은 Long 타입 리스트를 반환합니다.
         List<Stadium> topStadiumsPS = topEntries.stream().map(Map.Entry::getKey).collect(Collectors.toList());
-
         List<String> topStadiumNames = topStadiumsPS.stream().map(Stadium::getName).collect(Collectors.toList());
         List<Long> viewCounts = topEntries.stream().map(Map.Entry::getValue).collect(Collectors.toList());
+        Collections.reverse(viewCounts);
+        Collections.reverse(topStadiumNames);
 
         // for (Stadium st : topStadiums) {
         // System.out.println("테스트 1 : " + st.getName());
