@@ -26,41 +26,79 @@
 
             <div class="d-flex justify-content-center">
                 <div style="position: relative; top: 50px">
+                    <canvas id="myChart" width="800" height="500"></canvas>
 
-
-
-
-                  
                 </div>
             </div>
             
         </div>
 
-            <script>
-            function searchGet() {
-                let keyword =  $("#keyword").val();
-                location.href = "/admin/court?page=0&keyword=" + keyword;
-            }
-            function callPrev() {
-                let requestPage = `${nowPage-2}`;
-                let keyword = `${keyword}`
-                location.href = "/admin/court?page=" + requestPage+"&keyword="+keyword;
-            }
-
-            function callNext() {
-                let requestPage = `${nowPage}`;
-                let keyword = `${keyword}`
-                location.href = "/admin/court?page=" + requestPage+"&keyword="+keyword;
-            }
-
-            function courtDelete(courtId) {
+    </body>
+</html>
+    <script type="text/javascript">
+             getConnectionData()
+           function getConnectionData() {
                 $.ajax({
-                    url: '/admin/court/delete',
-                    method: 'POST',
-                    data: { courtId: courtId },
+                    url: '/admin/statistics/connection/data',
+                    method: 'GET',
+
                     success: function(response) {
-                        alert('내 맘에 안드는 코트 삭제!');
-                        location.reload();
+                    console.log();
+
+                    var labels = response.data.recentHalfYear;
+                    var data1 = response.data.playerConnectionData;
+                    var data2 = response.data.compnayConnectionData;
+
+                    // var labels = ['1','2','3','4','5','6','7'];
+                    // var data1 = [13, 19, 25, 20, 31, 26, 35];
+                    // var data2 = [10, 14, 12, 16, 18, 24, 25];
+                    var context = document
+                        .getElementById('myChart')
+                        .getContext('2d');
+
+
+                    var myChart = new Chart(context, {
+                        type: 'line', // 차트의 형태
+                        data: { // 차트에 들어갈 데이터
+                            labels: labels,
+                                //x 축
+
+                            datasets: [
+                                {
+                                    label: 'Player',
+                                    fill: false,
+                                    data: data1,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Company',
+                                    fill: false,
+                                    data: data2,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    });
+
+
+
+                        // alert('내 맘에 안드는 코트 삭제!');
+                        // location.reload();
                     },
                     error: function(error) {
                     // 에러 처리
@@ -69,6 +107,9 @@
                     }
                 });
             }
+
+
+
         </script>
 
         <%@ include file="../layout/footer.jsp" %>
