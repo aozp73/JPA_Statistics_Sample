@@ -14,7 +14,7 @@
                             접속률
                         </a>
                         <a href="/admin/statistics/views" class="list-group-item list-group-item-action">조회수</a>
-                        <a href="/admin/statistics/connection" class="list-group-item list-group-item-action active" aria-current="true">예약률</a>
+                        <a href="/admin/statistics/reservation" class="list-group-item list-group-item-action active" aria-current="true">예약률</a>
                     </div>
                 </div>
 

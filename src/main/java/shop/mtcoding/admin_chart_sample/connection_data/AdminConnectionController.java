@@ -16,9 +16,9 @@ import shop.mtcoding.admin_chart_sample.core.dto.ResponseDto;
 @RequiredArgsConstructor
 @RequestMapping("admin")
 @Controller
-public class AdminStatisticsController {
+public class AdminConnectionController {
 
-    private final AdminStatisticsService adminStatisticsService;
+    private final AdminConnectionService adminStatisticsService;
 
     @GetMapping("/main")
     public String main() {
@@ -30,12 +30,6 @@ public class AdminStatisticsController {
     public String connection() {
 
         return "admin/connection";
-    }
-
-    @GetMapping("/statistics/views")
-    public String views() {
-
-        return "admin/views";
     }
 
     @GetMapping("/statistics/reservation")

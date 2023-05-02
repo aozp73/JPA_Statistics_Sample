@@ -14,7 +14,7 @@ import shop.mtcoding.admin_chart_sample.connection_data.repository.ConnectionDat
 
 @RequiredArgsConstructor
 @Service
-public class AdminStatisticsService {
+public class AdminConnectionService {
 
     private final ConnectionDataRepository connectionDataRepository;
 

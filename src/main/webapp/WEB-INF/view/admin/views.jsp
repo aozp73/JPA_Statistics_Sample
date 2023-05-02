@@ -27,41 +27,140 @@
             <div class="d-flex justify-content-center">
                 <div style="position: relative; top: 50px">
 
+                    <div id="monthForm" class="d-flex justify-content-center" style="font-size: 30px">
+                        
+                    </div>
+                        <div class="d-flex justify-content-end me-4 mx-auto">
+                            <ul id="pageForm" class="pagination">
+                                <li id="prevButton" class='page-item'><a class="page-link" href="javascript:void(0);" onclick="callPrev();">Prev</a></li>
+                                <li id="nextButton" class='page-item'><a class="page-link" href="javascript:void(0);" onclick="callNext();">Next</a></li>
+                            </ul>
+                        </div>
 
+                        <div id="chartForm" style="width: 900px; height: 900px;">
+                            <!--차트가 그려질 부분-->
+                            <canvas id="myChart"></canvas>
+                        </div>
+                   
 
-
-                  
-                </div>
             </div>
             
         </div>
+         <script type="text/javascript">
+            let check = '${paging.check}';
+           getViewsData(check)
+           
+           function getViewsData(check) {
+               $('#myChart').remove(); // 이전 데이터를 삭제합니다.
+                $('#chartForm').append('<canvas id="myChart"></canvas>'); 
+               $.ajax({
+                    url: '/admin/statistics/views/data?check='+check,
+                    method: 'GET',
 
-            <script>
-            function searchGet() {
-                let keyword =  $("#keyword").val();
-                location.href = "/admin/court?page=0&keyword=" + keyword;
-            }
-            function callPrev() {
-                let requestPage = `${nowPage-2}`;
-                let keyword = `${keyword}`
-                location.href = "/admin/court?page=" + requestPage+"&keyword="+keyword;
-            }
-
-            function callNext() {
-                let requestPage = `${nowPage}`;
-                let keyword = `${keyword}`
-                location.href = "/admin/court?page=" + requestPage+"&keyword="+keyword;
-            }
-
-            function courtDelete(courtId) {
-                $.ajax({
-                    url: '/admin/court/delete',
-                    method: 'POST',
-                    data: { courtId: courtId },
                     success: function(response) {
-                        alert('내 맘에 안드는 코트 삭제!');
-                        location.reload();
-                    },
+                    var labels = response.data.topStadiumNames;
+                    var datas = response.data.viewCounts;
+                    var requestMonth = response.data.requestMonth;
+                    var first = response.data.first;
+                    var last = response.data.last;
+                    var check = response.data.check;
+
+                    console.log(labels);
+                    console.log(datas);
+                    console.log(requestMonth);
+                    console.log(first);
+                    console.log(last);
+                    console.log(check);
+                    var el = requestMonth+"월 경기장 조회순";
+                    $("#monthForm").empty();
+                    $("#monthForm").append(el);
+
+                    const prevButton = document.getElementById("prevButton");
+                    const nextButton = document.getElementById("nextButton");
+                    console.log(first);
+                    console.log(last);
+                    if (first) {
+                        prevButton.classList.add("disabled");
+                    } else {
+                        prevButton.classList.remove("disabled");
+                    }
+                    if (last) {
+                        nextButton.classList.add("disabled");
+                    } else {
+                        nextButton.classList.remove("disabled");
+                    }
+
+                    // document.getElementById("monthForm").innerText = requestMonth + "월 경기장 조회률";
+               
+                        var context = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(context, {
+                            type: 'bar', // 차트의 형태
+                            data: { // 차트에 들어갈 데이터
+                                labels: labels,
+                                // labels: [
+                                //     //x 축
+                                //     '1','2','3','4','5','6','7','8','9','10'
+                                // ],
+                                datasets: [
+                                    { //데이터
+                                        label: '조회 수', //차트 제목
+                                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                                        data: datas,
+                                        // data: [
+                                        //     21,19,25,20,23,26,25,31,12,41,23 //x축 label에 대응되는 데이터 값
+                                        // ],
+                                        backgroundColor: [
+                                            //색상
+                                            // 'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                        ],
+                                        borderColor: [
+                                            //경계선 색상
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            'rgba(0, 0, 0, 0.5)',
+                                            
+                                        ],
+                                        borderWidth: 1 //경계선 굵기
+                                    }
+                                ]
+                            },
+                            options: {
+                                 title: {
+                                     display: false // 제목 표시 안 함
+                                 },
+                                 legend: {
+                                     display: false // 범례 표시 안 함
+                                 },
+                                scales: {
+                                    yAxes: [
+                                        {
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        });
+
+                                    },
                     error: function(error) {
                     // 에러 처리
                     alert('삭제 중 오류가 발생했습니다.');
@@ -69,6 +168,29 @@
                     }
                 });
             }
+            </script>
+            <script>
+
+            function callPrev() {
+                // $("#myChart").empty();
+               const chartContainer = document.querySelector('#chartForm');
+                chartContainer.removeChild(chartContainer.firstChild);
+                // $("#myChart").empty();
+                
+                check++;
+                getViewsData(check);
+            }
+
+            function callNext() {
+
+                const chartContainer = document.querySelector('#chartForm');
+                chartContainer.removeChild(chartContainer.firstChild);
+                // $("#myChart").empty();
+                
+                check--;
+                getViewsData(check);
+            }
+
         </script>
 
         <%@ include file="../layout/footer.jsp" %>
