@@ -27,17 +27,8 @@ public class AdminViewController {
 
     @GetMapping("/statistics/views/data")
     public ResponseEntity<?> viewData(Integer check, Model model) {
-        if (check == null) {
-            System.out.println("테스트 000: " + check);
-
-        }
-        System.out.println("테스트 : 통신성공");
         ViewDataOutDTO viewDataOutDTO = adminViewService.getViewsData(check);
-        // System.out.println("테스트 11: " + viewDataOutDTO.getTopStadiums().size());
-        // System.out.println("테스트 22: " + viewDataOutDTO.getViewCounts().size());
-        System.out.println("테스트 : 통신전");
 
-        // model.addAttribute("paing", new PagingButtonDTO(false, true, 1));
         return ResponseEntity.ok().body(new ResponseDto<>().data(viewDataOutDTO));
     }
 }

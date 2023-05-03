@@ -42,7 +42,7 @@
                             <canvas id="myChart"></canvas>
                         </div>
                    
-
+image.png
             </div>
             
         </div>
@@ -65,20 +65,13 @@
                     var last = response.data.last;
                     var check = response.data.check;
 
-                    console.log(labels);
-                    console.log(datas);
-                    console.log(requestMonth);
-                    console.log(first);
-                    console.log(last);
-                    console.log(check);
                     var el = requestMonth+"월 경기장 조회순";
                     $("#monthForm").empty();
                     $("#monthForm").append(el);
 
                     const prevButton = document.getElementById("prevButton");
                     const nextButton = document.getElementById("nextButton");
-                    console.log(first);
-                    console.log(last);
+
                     if (first) {
                         prevButton.classList.add("disabled");
                     } else {
@@ -90,28 +83,20 @@
                         nextButton.classList.remove("disabled");
                     }
 
-                    // document.getElementById("monthForm").innerText = requestMonth + "월 경기장 조회률";
-               
                         var context = document.getElementById('myChart').getContext('2d');
                         var myChart = new Chart(context, {
                             type: 'bar', // 차트의 형태
                             data: { // 차트에 들어갈 데이터
                                 labels: labels,
-                                // labels: [
-                                //     //x 축
-                                //     '1','2','3','4','5','6','7','8','9','10'
-                                // ],
+
                                 datasets: [
                                     { //데이터
                                         label: '조회 수', //차트 제목
                                         fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                                         data: datas,
-                                        // data: [
-                                        //     21,19,25,20,23,26,25,31,12,41,23 //x축 label에 대응되는 데이터 값
-                                        // ],
+
                                         backgroundColor: [
                                             //색상
-                                            // 'rgba(255, 99, 132, 0.2)',
                                             'rgba(54, 162, 235, 0.2)',
                                             'rgba(54, 162, 235, 0.2)',
                                             'rgba(54, 162, 235, 0.2)',
@@ -168,14 +153,12 @@
                     }
                 });
             }
-            </script>
-            <script>
+         
 
             function callPrev() {
-                // $("#myChart").empty();
-               const chartContainer = document.querySelector('#chartForm');
-                chartContainer.removeChild(chartContainer.firstChild);
-                // $("#myChart").empty();
+                
+            //    const chartContainer = document.querySelector('#chartForm');
+            //     chartContainer.removeChild(chartContainer.firstChild);
                 
                 check++;
                 getViewsData(check);
@@ -183,9 +166,8 @@
 
             function callNext() {
 
-                const chartContainer = document.querySelector('#chartForm');
-                chartContainer.removeChild(chartContainer.firstChild);
-                // $("#myChart").empty();
+                // const chartContainer = document.querySelector('#chartForm');
+                // chartContainer.removeChild(chartContainer.firstChild);
                 
                 check--;
                 getViewsData(check);

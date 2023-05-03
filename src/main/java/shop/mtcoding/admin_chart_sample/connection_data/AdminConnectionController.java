@@ -40,17 +40,6 @@ public class AdminConnectionController {
 
     @GetMapping("/statistics/connection/data")
     public ResponseEntity<?> getData() {
-        System.out.println("테스트 : 통신성공");
-        // List<Integer> playerConnectionData = new ArrayList<>(Arrays.asList(19, 25,
-        // 20, 31, 26, 35));
-        // List<Integer> compnayConnectionData = new ArrayList<>(Arrays.asList(14, 12,
-        // 16, 18, 24, 25));
-        // List<String> recentHalfYear = new ArrayList<>(Arrays.asList("11", "12", "1",
-        // "2", "3", "4"));
-
-        // ConnectionDataOutDTO connectionDataOutDTO = new
-        // ConnectionDataOutDTO(playerConnectionData,
-        // compnayConnectionData, recentHalfYear);
 
         ConnectionDataOutDTO connectionDataOutDTO = adminStatisticsService.getConnectionData();
 

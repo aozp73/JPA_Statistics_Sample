@@ -35,8 +35,9 @@
 
     </body>
 </html>
+
     <script type="text/javascript">
-             getConnectionData()
+            getConnectionData()
            function getConnectionData() {
                 $.ajax({
                     url: '/admin/statistics/connection/data',
@@ -49,9 +50,6 @@
                     var data1 = response.data.playerConnectionData;
                     var data2 = response.data.compnayConnectionData;
 
-                    // var labels = ['1','2','3','4','5','6','7'];
-                    // var data1 = [13, 19, 25, 20, 31, 26, 35];
-                    // var data2 = [10, 14, 12, 16, 18, 24, 25];
                     var context = document
                         .getElementById('myChart')
                         .getContext('2d');
@@ -60,8 +58,7 @@
                     var myChart = new Chart(context, {
                         type: 'line', // 차트의 형태
                         data: { // 차트에 들어갈 데이터
-                            labels: labels,
-                                //x 축
+                            labels: labels, // x 축
 
                             datasets: [
                                 {
@@ -95,10 +92,6 @@
                         }
                     });
 
-
-
-                        // alert('내 맘에 안드는 코트 삭제!');
-                        // location.reload();
                     },
                     error: function(error) {
                     // 에러 처리
@@ -107,9 +100,6 @@
                     }
                 });
             }
-
-
-
         </script>
 
         <%@ include file="../layout/footer.jsp" %>
